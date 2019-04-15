@@ -1,0 +1,39 @@
+<% include loginnav.ejs %>
+<div class="container" id="LoginContainer">
+	<div class="row"></div>
+	<div id="login-page" class="row">
+		<div class="col s12 m2 l4">
+		</div>
+		<div class="col s12 m8 l4 z-depth-4 card-panel">
+			<form class="login-form">
+				<div class="row ">
+					<h4 class="center-align">Login</h4>
+				</div>
+				<div class="row margin">
+					<div class="input-field col s12">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="username" type="text" autocomplete="email">
+						<label for="username" class="center-align">Username</label>
+					</div>
+				</div>
+				<div class="row margin center-align">
+					<div class="input-field col s12">
+						<i class="material-icons prefix">lock</i>
+						<input id="password" type="password" autocomplete="current-password">
+						<label for="password">Password</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12 ">
+						<a onclick="toggleSignIn()" class="btn waves-effect waves-light col s12">Login</a>
+					</div>
+				</div>
+				<div class="row"></div>
+			</form>
+		</div>
+		<div class="col s12 m2 l4">
+			<!-- Note that "m4 l3" was added -->
+		</div>
+	</div>
+</div>
+<%include foot.ejs%>
