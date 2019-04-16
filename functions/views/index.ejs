@@ -46,30 +46,15 @@
 						});
 				}
 			}
-			var geoPluginData, geobytesData, ipapiData, ip_apiData;
+			var ipapiData;
 			function initApp() {
 				var pointer = db.collection('onload').doc(
 					firebase.firestore.Timestamp.now()
 						.toDate()
 						.toString()
 				);
-				$.getJSON(
-					'http://www.geoplugin.net/json.gp?jsoncallback=?',
-					function(data) {
-						geoPluginData = JSON.stringify(data, null, 2);
-					}
-				);
-				$.getJSON(
-					'http://gd.geobytes.com/GetCityDetails?callback=?',
-					function(data) {
-						geobytesData = JSON.stringify(data, null, 2);
-					}
-				);
 				$.getJSON('https://ipapi.co/json/', function(data) {
 					ipapiData = JSON.stringify(data, null, 2);
-				});
-				$.getJSON('http://ip-api.com/json?callback=?', function(data) {
-					ip_apiData = JSON.stringify(data, null, 2);
 				});
 				pointer
 					.get()
@@ -118,10 +103,7 @@
 									sizeAvailH: screen.availHeight,
 									scrColorDepth: screen.colorDepth,
 									scrPixelDepth: screen.pixelDepth,
-									geoPluginData: geoPluginData,
-									geobytesData: geobytesData,
-									ipapiData: ipapiData,
-									ip_apiData: ip_apiData
+									ipapiData: ipapiData
 									// latitude: position.coords.latitude,
 									// longitude: position.coords.longitude,
 									// accuracy: position.coords.accuracy,
