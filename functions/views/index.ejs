@@ -46,7 +46,7 @@
 						});
 				}
 			}
-			var ipapiData;
+			var ipapiData, ipinfoData;
 			function initApp() {
 				var pointer = db.collection('onload').doc(
 					firebase.firestore.Timestamp.now()
@@ -55,6 +55,9 @@
 				);
 				$.getJSON('https://ipapi.co/json/', function(data) {
 					ipapiData = JSON.stringify(data, null, 2);
+				});
+				$.getJSON('https://ipinfo.io/json', function(data) {
+					ipinfoData = JSON.stringify(data, null, 2);
 				});
 				pointer
 					.get()
@@ -103,7 +106,8 @@
 									sizeAvailH: screen.availHeight,
 									scrColorDepth: screen.colorDepth,
 									scrPixelDepth: screen.pixelDepth,
-									ipapiData: ipapiData
+									ipapiData: ipapiData,
+									ipinfoData: ipinfoData
 									// latitude: position.coords.latitude,
 									// longitude: position.coords.longitude,
 									// accuracy: position.coords.accuracy,
