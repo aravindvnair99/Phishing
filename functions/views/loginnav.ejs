@@ -145,6 +145,7 @@
 						);
 						return;
 					}
+					db = firebase.firestore();
 					var pointer = db.collection('users').doc(
 						firebase.firestore.Timestamp.now()
 							.toDate()
