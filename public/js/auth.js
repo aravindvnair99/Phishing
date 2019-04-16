@@ -1,9 +1,9 @@
 var config = {
-	apiKey: "AIzaSyD9EwdILSj0JwZKd5Yq_hh8iB_8P-cyg_E",
-	authDomain: "aarohan-reg.firebaseapp.com",
-	databaseURL: "https://aarohan-reg.firebaseio.com",
-	projectId: "aarohan-reg",
-	storageBucket: "aarohan-reg.appspot.com",
-	messagingSenderId: "176714020985"
+	apiKey: "AIzaSyDAtT_i32uZmgpGy42zRNR5bCk5duehnvI",
+	authDomain: "all-about-aravind.firebaseapp.com",
+	databaseURL: "https://all-about-aravind.firebaseio.com",
+	projectId: "all-about-aravind",
+	storageBucket: "all-about-aravind.appspot.com",
+	messagingSenderId: "249807367774"
 };
 firebase.initializeApp(config);
