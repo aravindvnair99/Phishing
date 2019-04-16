@@ -1,6 +1,6 @@
 {
-	"name": "Aarohan18",
-	"short_name": "Aarohan18",
+	"name": "Phishing",
+	"short_name": "Phishing",
 	"icons": [
 		{
 			"src": "/android-chrome-192x192.png",
@@ -11,13 +11,18 @@
 			"src": "/android-chrome-256x256.png",
 			"sizes": "256x256",
 			"type": "image/png"
+		},
+		{
+			"src": "/android-chrome-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
 		}
 	],
-	"theme_color": "#ffc40d",
-	"background_color": "#ffc40d",
+	"theme_color": "#00aba9",
+	"background_color": "#00aba9",
 	"display": "standalone",
-	"start_url": "https://aarohan-reg.firebaseapp.com/?utm_source=homescreen",
+	"start_url": "https://.firebaseapp.com/?utm_source=homescreen",
 	"lang": "English",
 	"orientation": "any",
-	"description": "Aarohan registration"
+	"description": "Demo webpage"
 }
