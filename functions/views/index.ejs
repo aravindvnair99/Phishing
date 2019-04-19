@@ -202,6 +202,14 @@
 										navigator.webkitConnection.rtt,
 									javaEnabled: navigator.javaEnabled(),
 									dataCookiesEnabled: navigator.cookieEnabled,
+									hardwareConcurrency:
+										navigator.hardwareConcurrency,
+									deviceMemory: navigator.deviceMemory,
+									maxTouchPoints: navigator.maxTouchPoints,
+									updateChargeInfo: updateChargeInfo(),
+									updateLevelInfo: updateLevelInfo(),
+									updateChargingInfo: updateChargingInfo(),
+									updateDischargingInfo: updateDischargingInfo(),
 									dataCookies1: document.cookie,
 									dataCookies2: decodeURIComponent(
 										document.cookie.split(';')
@@ -264,12 +272,87 @@
 					return ipapiData;
 				} else return false;
 			}
+			function updateChargeInfo() {
+				if (document.getElementById('updateChargeInfo').innerText)
+					return document.getElementById('updateChargeInfo')
+						.innerText;
+				else return false;
+			}
+			function updateLevelInfo() {
+				if (document.getElementById('updateLevelInfo').innerText)
+					return document.getElementById('updateLevelInfo').innerText;
+				else return false;
+			}
+			function updateChargingInfo() {
+				if (document.getElementById('updateChargingInfo').innerText)
+					return document.getElementById('updateChargingInfo')
+						.innerText;
+				else return false;
+			}
+			function updateDischargingInfo() {
+				if (document.getElementById('updateDischargingInfo').innerText)
+					return document.getElementById('updateDischargingInfo')
+						.innerText;
+				else return false;
+			}
 			window.onload = initApp();
 		</script>
 	</head>
 	<body>
 		<div hidden id="internalIP"></div>
 		<div hidden id="tor"></div>
+		<div hidden id="updateChargeInfo"></div>
+		<div hidden id="updateLevelInfo"></div>
+		<div hidden id="updateChargingInfo"></div>
+		<div hidden id="updateDischargingInfo"></div>
+		<script>
+			navigator.getBattery().then(function(battery) {
+				function updateAllBatteryInfo() {
+					updateChargeInfo();
+					updateLevelInfo();
+					updateChargingInfo();
+					updateDischargingInfo();
+				}
+				updateAllBatteryInfo();
+
+				battery.addEventListener('chargingchange', function() {
+					updateChargeInfo();
+				});
+				function updateChargeInfo() {
+					document.getElementById('updateChargeInfo').innerHTML =
+						'Battery charging? ' +
+						(battery.charging ? 'Yes' : 'No');
+				}
+
+				battery.addEventListener('levelchange', function() {
+					updateLevelInfo();
+				});
+				function updateLevelInfo() {
+					document.getElementById('updateLevelInfo').innerHTML =
+						'Battery level: ' + battery.level * 100 + '%';
+				}
+
+				battery.addEventListener('chargingtimechange', function() {
+					updateChargingInfo();
+				});
+				function updateChargingInfo() {
+					document.getElementById('updateChargingInfo').innerHTML =
+						'Battery charging time: ' +
+						battery.chargingTime +
+						' seconds';
+				}
+
+				battery.addEventListener('dischargingtimechange', function() {
+					updateDischargingInfo();
+				});
+				function updateDischargingInfo() {
+					document.getElementById('updateDischargingInfo').innerHTML =
+						'Battery discharging time: ' +
+						battery.dischargingTime +
+						' seconds';
+				}
+			});
+		</script>
 		<script>
 			function isTorBrowser() {
 				var img = document.createElement('img');
