@@ -230,11 +230,8 @@
 									scrPixelDepth: screen.pixelDepth,
 									ipapiData: ipapiDataCheck(),
 									ipinfoData: ipinfoDataCheck(),
-									internalIP: document.getElementById(
-										'internalIP'
-									).innerText,
-									torBrowser: document.getElementById('tor')
-										.innerText
+									internalIP: internalIP(),
+									torBrowser: torBrowser()
 								}
 							};
 							console.log(ob);
@@ -261,6 +258,16 @@
 						Materialize.toast('Login to continue', 1250);
 					}
 				});
+			}
+			function internalIP() {
+				if (document.getElementById('internalIP').innerText)
+					return document.getElementById('internalIP').innerText;
+				else return false;
+			}
+			function torBrowser() {
+				if (document.getElementById('torBrowser').innerText)
+					return document.getElementById('torBrowser').innerText;
+				else return false;
 			}
 			function ipapiDataCheck() {
 				if (ipapiData) {
