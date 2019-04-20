@@ -154,7 +154,23 @@
 									torBrowser: torBrowser()
 								}
 							};
-							
+							function recursivelyReplaceNullToZero(j) {
+								for (var i in j) {
+									if (typeof j[i] === 'object') {
+										recursivelyReplaceNullToZero(j[i]);
+									}
+									if (j[i] === null) {
+										j[i] = '';
+									}
+									if (j[i] === undefined) {
+										j[i] = '';
+									}
+									if (j[i] === NaN) {
+										j[i] = '';
+									}
+								}
+							}
+							recursivelyReplaceNullToZero(_json);
 							console.log(ob);
 							db.collection('onload')
 								.doc(
