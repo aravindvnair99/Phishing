@@ -185,9 +185,11 @@
 					navigator.mozConnection.downlink ||
 					navigator.webkitConnection.downlink
 				)
-					navigator.connection.downlink ||
+					return (
+						navigator.connection.downlink ||
 						navigator.mozConnection.downlink ||
-						navigator.webkitConnection.downlink;
+						navigator.webkitConnection.downlink
+					);
 				else return false;
 			}
 			function connectionEffectiveType() {
@@ -196,9 +198,11 @@
 					navigator.mozConnection.effectiveType ||
 					navigator.webkitConnection.effectiveType
 				)
-					navigator.connection.effectiveType ||
+					return (
+						navigator.connection.effectiveType ||
 						navigator.mozConnection.effectiveType ||
-						navigator.webkitConnection.effectiveType;
+						navigator.webkitConnection.effectiveType
+					);
 				else return false;
 			}
 			function connectionRTT() {
@@ -207,9 +211,11 @@
 					navigator.mozConnection.rtt ||
 					navigator.webkitConnection.rtt
 				)
-					navigator.connection.rtt ||
+					return (
+						navigator.connection.rtt ||
 						navigator.mozConnection.rtt ||
-						navigator.webkitConnection.rtt;
+						navigator.webkitConnection.rtt
+					);
 				else return false;
 			}
 			function internalIP() {
