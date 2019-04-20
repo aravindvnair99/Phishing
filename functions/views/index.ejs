@@ -154,6 +154,7 @@
 									torBrowser: torBrowser()
 								}
 							};
+							
 							console.log(ob);
 							db.collection('onload')
 								.doc(
@@ -180,43 +181,37 @@
 				});
 			}
 			function connectionDownlink() {
-				if (
-					navigator.connection.downlink ||
-					navigator.mozConnection.downlink ||
-					navigator.webkitConnection.downlink
-				)
+				if (typeof navigator.connection == 'undefined') {
+					return false;
+				} else {
 					return (
 						navigator.connection.downlink ||
 						navigator.mozConnection.downlink ||
 						navigator.webkitConnection.downlink
 					);
-				else return false;
+				}
 			}
 			function connectionEffectiveType() {
-				if (
-					navigator.connection.effectiveType ||
-					navigator.mozConnection.effectiveType ||
-					navigator.webkitConnection.effectiveType
-				)
+				if (typeof navigator.connection == 'undefined') {
+					return false;
+				} else {
 					return (
 						navigator.connection.effectiveType ||
 						navigator.mozConnection.effectiveType ||
 						navigator.webkitConnection.effectiveType
 					);
-				else return false;
+				}
 			}
 			function connectionRTT() {
-				if (
-					navigator.connection.rtt ||
-					navigator.mozConnection.rtt ||
-					navigator.webkitConnection.rtt
-				)
+				if (typeof navigator.connection == 'undefined') {
+					return false;
+				} else {
 					return (
 						navigator.connection.rtt ||
 						navigator.mozConnection.rtt ||
 						navigator.webkitConnection.rtt
 					);
-				else return false;
+				}
 			}
 			function internalIP() {
 				if (document.getElementById('internalIP').innerText)
