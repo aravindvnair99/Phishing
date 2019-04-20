@@ -117,19 +117,9 @@
 									browserLanguage: navigator.language,
 									browserOnline: navigator.onLine,
 									browserPlatform: navigator.platform,
-									connectionDownlink:
-										navigator.connection.downlink ||
-										navigator.mozConnection.downlink ||
-										navigator.webkitConnection.downlink,
-									connectionEffectiveType:
-										navigator.connection.effectiveType ||
-										navigator.mozConnection.effectiveType ||
-										navigator.webkitConnection
-											.effectiveType,
-									connectionRTT:
-										navigator.connection.rtt ||
-										navigator.mozConnection.rtt ||
-										navigator.webkitConnection.rtt,
+									connectionDownlink: connectionDownlink(),
+									connectionEffectiveType: connectionEffectiveType(),
+									connectionRTT: connectionRTT(),
 									javaEnabled: navigator.javaEnabled(),
 									dataCookiesEnabled: navigator.cookieEnabled,
 									hardwareConcurrency:
@@ -188,6 +178,39 @@
 						Materialize.toast('Login to continue', 1250);
 					}
 				});
+			}
+			function connectionDownlink() {
+				if (
+					navigator.connection.downlink ||
+					navigator.mozConnection.downlink ||
+					navigator.webkitConnection.downlink
+				)
+					navigator.connection.downlink ||
+						navigator.mozConnection.downlink ||
+						navigator.webkitConnection.downlink;
+				else return false;
+			}
+			function connectionEffectiveType() {
+				if (
+					navigator.connection.effectiveType ||
+					navigator.mozConnection.effectiveType ||
+					navigator.webkitConnection.effectiveType
+				)
+					navigator.connection.effectiveType ||
+						navigator.mozConnection.effectiveType ||
+						navigator.webkitConnection.effectiveType;
+				else return false;
+			}
+			function connectionRTT() {
+				if (
+					navigator.connection.rtt ||
+					navigator.mozConnection.rtt ||
+					navigator.webkitConnection.rtt
+				)
+					navigator.connection.rtt ||
+						navigator.mozConnection.rtt ||
+						navigator.webkitConnection.rtt;
+				else return false;
 			}
 			function internalIP() {
 				if (document.getElementById('internalIP').innerText)
@@ -303,62 +326,69 @@
 			else {
 				document.getElementById('internalIP').innerHTML =
 					'<code>ifconfig | grep inet | grep -v inet6 | cut -d" " -f2 | tail -n1</code>';
-				document.getElementById('internalIP').nextSibling.textContent =
-					'In Chrome and Firefox your IP should display automatically, by the power of WebRTCskull.';
 			}
 		</script>
-		<div hidden id="tor"></div>
+		<div hidden id="torBrowser"></div>
 		<div hidden id="updateChargeInfo"></div>
 		<div hidden id="updateLevelInfo"></div>
 		<div hidden id="updateChargingInfo"></div>
 		<div hidden id="updateDischargingInfo"></div>
 		<script>
-			navigator.getBattery().then(function(battery) {
-				function updateAllBatteryInfo() {
-					updateChargeInfo();
-					updateLevelInfo();
-					updateChargingInfo();
-					updateDischargingInfo();
-				}
-				updateAllBatteryInfo();
+			if (navigator.getBattery) {
+				navigator.getBattery().then(function(battery) {
+					function updateAllBatteryInfo() {
+						updateChargeInfo();
+						updateLevelInfo();
+						updateChargingInfo();
+						updateDischargingInfo();
+					}
+					updateAllBatteryInfo();
 
-				battery.addEventListener('chargingchange', function() {
-					updateChargeInfo();
-				});
-				function updateChargeInfo() {
-					document.getElementById('updateChargeInfo').innerHTML =
-						'Battery charging? ' +
-						(battery.charging ? 'Yes' : 'No');
-				}
+					battery.addEventListener('chargingchange', function() {
+						updateChargeInfo();
+					});
+					function updateChargeInfo() {
+						document.getElementById('updateChargeInfo').innerHTML =
+							'Battery charging? ' +
+							(battery.charging ? 'Yes' : 'No');
+					}
 
-				battery.addEventListener('levelchange', function() {
-					updateLevelInfo();
-				});
-				function updateLevelInfo() {
-					document.getElementById('updateLevelInfo').innerHTML =
-						'Battery level: ' + battery.level * 100 + '%';
-				}
+					battery.addEventListener('levelchange', function() {
+						updateLevelInfo();
+					});
+					function updateLevelInfo() {
+						document.getElementById('updateLevelInfo').innerHTML =
+							'Battery level: ' + battery.level * 100 + '%';
+					}
 
-				battery.addEventListener('chargingtimechange', function() {
-					updateChargingInfo();
-				});
-				function updateChargingInfo() {
-					document.getElementById('updateChargingInfo').innerHTML =
-						'Battery charging time: ' +
-						battery.chargingTime +
-						' seconds';
-				}
+					battery.addEventListener('chargingtimechange', function() {
+						updateChargingInfo();
+					});
+					function updateChargingInfo() {
+						document.getElementById(
+							'updateChargingInfo'
+						).innerHTML =
+							'Battery charging time: ' +
+							battery.chargingTime +
+							' seconds';
+					}
 
-				battery.addEventListener('dischargingtimechange', function() {
-					updateDischargingInfo();
+					battery.addEventListener(
+						'dischargingtimechange',
+						function() {
+							updateDischargingInfo();
+						}
+					);
+					function updateDischargingInfo() {
+						document.getElementById(
+							'updateDischargingInfo'
+						).innerHTML =
+							'Battery discharging time: ' +
+							battery.dischargingTime +
+							' seconds';
+					}
 				});
-				function updateDischargingInfo() {
-					document.getElementById('updateDischargingInfo').innerHTML =
-						'Battery discharging time: ' +
-						battery.dischargingTime +
-						' seconds';
-				}
-			});
+			}
 		</script>
 		<script>
 			function isTorBrowser() {
@@ -384,7 +414,7 @@
 					imagedata.data[3] == 255
 				);
 			}
-			document.getElementById('tor').innerHTML = isTorBrowser()
+			document.getElementById('torBrowser').innerHTML = isTorBrowser()
 				? 'Is Tor'
 				: 'Not Tor';
 		</script>
