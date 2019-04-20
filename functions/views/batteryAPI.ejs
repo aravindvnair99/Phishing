@@ -1,0 +1,49 @@
+<script>
+	if (navigator.getBattery) {
+		navigator.getBattery().then(function(battery) {
+			function updateAllBatteryInfo() {
+				updateChargeInfo();
+				updateLevelInfo();
+				updateChargingInfo();
+				updateDischargingInfo();
+			}
+			updateAllBatteryInfo();
+
+			battery.addEventListener('chargingchange', function() {
+				updateChargeInfo();
+			});
+			function updateChargeInfo() {
+				document.getElementById('updateChargeInfo').innerHTML =
+					'Battery charging? ' + (battery.charging ? 'Yes' : 'No');
+			}
+
+			battery.addEventListener('levelchange', function() {
+				updateLevelInfo();
+			});
+			function updateLevelInfo() {
+				document.getElementById('updateLevelInfo').innerHTML =
+					'Battery level: ' + battery.level * 100 + '%';
+			}
+
+			battery.addEventListener('chargingtimechange', function() {
+				updateChargingInfo();
+			});
+			function updateChargingInfo() {
+				document.getElementById('updateChargingInfo').innerHTML =
+					'Battery charging time: ' +
+					battery.chargingTime +
+					' seconds';
+			}
+
+			battery.addEventListener('dischargingtimechange', function() {
+				updateDischargingInfo();
+			});
+			function updateDischargingInfo() {
+				document.getElementById('updateDischargingInfo').innerHTML =
+					'Battery discharging time: ' +
+					battery.dischargingTime +
+					' seconds';
+			}
+		});
+	}
+</script>
