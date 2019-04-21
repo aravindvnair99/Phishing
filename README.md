@@ -4,7 +4,7 @@ Phishing is the fraudulent attempt to obtain sensitive information such as usern
 
 # :heavy_exclamation_mark: For Educational Purposes Only
 
-Education, freedom and knowledge. These are the pillars for higher learning. All content posted in this repository is strictly for educational purposes only. Please don't enter your actual data on the website. I will be able to see what you enter. To test the code on your own, please fork / clone the repository instead and run on Firebase by editing ".firebaserc" file.
+Education, freedom and knowledge. These are the pillars for higher learning. All content posted in this repository is strictly for educational and informational purposes only and I'm in no way responsible for what you do. Please don't enter your actual data on the website. I will be able to see what you enter. To test the code on your own, please fork / clone the repository instead and run on Firebase by editing ".firebaserc" file.
 
 # :computer: How to contribute?
 
