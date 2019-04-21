@@ -4,7 +4,7 @@ Phishing is the fraudulent attempt to obtain sensitive information such as usern
 
 # :heavy_exclamation_mark: For Educational Purposes Only
 
-
+Education, freedom and knowledge. These are the pillars for higher learning. All content posted in this repository is strictly for educational purposes only. Please don't enter your actual data on the website. I will be able to see what you enter. To test the code on your own, please fork / clone the repository instead and run on Firebase by editing ".firebaserc" file.
 
 # :computer: How to contribute?
 
@@ -18,7 +18,7 @@ This project is licensed under the MIT license - see the [LICENSE](LICENSE) file
 
 # :family: Team
 
-* **Aravind V. Nair** - *Front-end, Back-end and Security* - [AravindVNair99](https://github.com/aravindvnair99)
+* **Aravind V. Nair** - *Front-end, Testing, Back-end and Security* - [AravindVNair99](https://github.com/aravindvnair99)
 
 See the full list of [contributors](https://github.com/aravindvnair99/Phishing/graphs/contributors) who participated in this project and statistics.
 
