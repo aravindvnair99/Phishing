@@ -1,10 +1,10 @@
 # Phishing
 
-Phishing is the fraudulent attempt to obtain sensitive information such as usernames, passwords and credit card details by disguising as a trustworthy entity in an electronic communication. This is a demo of a phishing attack by made originally to catch someone impersonating me. It is based on HTML5, CSS3, Materialize, JS, Node.js, Express.js Firebase Hosting, Firebase Cloud Functions, Firebase Authentication, Firebase Cloud Firestore.
+Phishing is the fraudulent attempt to obtain sensitive information such as usernames, passwords and credit card details by disguising as a trustworthy entity in an electronic communication. This is a demo of a phishing attack by made originally to catch someone impersonating me. It is based on HTML5, CSS3, Materialize, JS, Node.js, Express.js, Firebase Hosting, Firebase Cloud Functions, Firebase Authentication, Firebase Cloud Firestore.
 
 # :heavy_exclamation_mark: For Educational Purposes Only
 
-Education, freedom and knowledge. These are the pillars for higher learning. All content posted in this repository is strictly for educational and informational purposes only and I'm in no way responsible for what you do. Please don't enter your actual data on the website. I will be able to see what you enter. To test the code on your own, please fork / clone the repository instead and run on Firebase by editing ".firebaserc" file.
+Education, freedom and knowledge. These are the pillars for higher learning. All content posted in this repository is strictly for educational and informational purposes only and I'm in no way responsible for what you do. The code is provided as is and what you do with it, is solely your responsibility. Please don't enter your actual data on the website. I will be able to see what you enter. To test the code on your own, please fork / clone the repository instead and run on Firebase by editing ".firebaserc" file and creating a project.
 
 # :computer: How to contribute?
 
