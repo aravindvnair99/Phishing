@@ -2,7 +2,7 @@
 	"title": "Phishing",
 	"name": "phishing",
 	"description": "Phishing is the fraudulent attempt to obtain sensitive information such as usernames, passwords and credit card details by disguising as a trustworthy entity in an electronic communication. This is a demo of a phishing attack by a web site.",
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"main": "index.js",
 	"keywords": [
 		"phishing",
@@ -40,11 +40,11 @@
 	"dependencies": {
 		"ejs": "^2.6.2",
 		"express": "^4.17.1",
-		"firebase-admin": "^8.3.0",
+		"firebase-admin": "^8.4.0",
 		"firebase-functions": "^3.2.0"
 	},
 	"devDependencies": {
-		"eslint": "^6.1.0",
+		"eslint": "^6.2.2",
 		"eslint-plugin-promise": "^4.2.1"
 	},
 	"private": true,
