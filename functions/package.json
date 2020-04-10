@@ -38,7 +38,7 @@
 		"logs": "firebase functions:log"
 	},
 	"dependencies": {
-		"ejs": "^3.0.1",
+		"ejs": "^3.0.2",
 		"express": "^4.17.1",
 		"firebase-admin": "^8.9.2",
 		"firebase-functions": "^3.6.0"
