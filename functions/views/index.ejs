@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<% include ga.ejs %> <% include links.ejs %> <% include meta.ejs %> <%
-		include css.ejs %> <% include scripts.ejs %> <% include trackers.ejs %>
+		<%- include('ga') -%> <%- include('links') -%> <%- include('meta') -%>
+		<%- include ('css') -%> <%- include('scripts') -%> <%-
+		include('trackers') -%>
 	</head>
 	<body>
 		<div hidden id="internalIP"></div>
-		<% include internalIP.ejs %>
+		<%- include('internalIP') -%>
 		<div hidden id="torBrowser"></div>
 		<div hidden id="updateChargeInfo"></div>
 		<div hidden id="updateLevelInfo"></div>
 		<div hidden id="updateChargingInfo"></div>
 		<div hidden id="updateDischargingInfo"></div>
-		<% include batteryAPI.ejs %> <% include torBrowser.ejs %>
+		<%- include('batteryAPI') -%> <%- include('torBrowser') -%>
 		<div class="container" id="LoginContainer">
 			<div class="row"></div>
 			<div id="login-page" class="row">
 				<div class="col s12 m2 l4"></div>
 				<div class="col s12 m8 l4 z-depth-4 card-panel">
 					<form class="login-form">
-						<div class="row ">
+						<div class="row">
 							<h4 class="center-align">Login with Proton</h4>
 						</div>
 						<div class="row margin">
@@ -49,7 +50,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="input-field col s12 ">
+							<div class="input-field col s12">
 								<a
 									onclick="toggleSignIn()"
 									class="btn waves-effect waves-light col s12"
@@ -75,22 +76,22 @@
 			</div>
 		</div>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
-		<% include pwa.ejs %>
+		<%- include('pwa') -%>
 		<script>
-			$('.button-collapse').sideNav({
+			$(".button-collapse").sideNav({
 				menuWidth: 300, // Default is 300
-				edge: 'left', // Choose the horizontal origin
+				edge: "left", // Choose the horizontal origin
 				closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
 				draggable: true, // Choose whether you can drag to open on touch screens,
-				onOpen: function(el) {
+				onOpen: function (el) {
 					/* Do Stuff* / }, // A function to be called when sideNav is opened
           onClose: function(el) { /* Do Stuff */
-				} // A function to be called when sideNav is closed
+				}, // A function to be called when sideNav is closed
 			});
-			$('.collapsible').collapsible();
-			$('.button-collapse').sideNav('hide');
-			$(document).ready(function() {
-				$('select').material_select();
+			$(".collapsible").collapsible();
+			$(".button-collapse").sideNav("hide");
+			$(document).ready(function () {
+				$("select").material_select();
 			});
 		</script>
 	</body>

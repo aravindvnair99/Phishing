@@ -2,7 +2,7 @@
 	"title": "Phishing",
 	"name": "phishing",
 	"description": "Phishing is the fraudulent attempt to obtain sensitive information such as usernames, passwords and credit card details by disguising as a trustworthy entity in an electronic communication. This is a demo of a phishing attack by a web site.",
-	"version": "2.2.2",
+	"version": "2.2.3",
 	"main": "index.js",
 	"keywords": [
 		"phishing",
