@@ -1,0 +1,23 @@
+name: Node CI
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+    - uses: actions/checkout@main
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@main
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Lint
+      run: |
+        cd functions/
+        npm i
+        npm run lint
+      env:
+        CI: true
