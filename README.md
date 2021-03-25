@@ -10,7 +10,7 @@ Education, freedom and knowledge. These are the pillars for higher learning. All
 
 All contributions are welcome! Code, documentation, graphics or even design suggestions are welcome; use GitHub to its fullest. Submit pull requests, contribute tutorials or other wiki content -- whatever you have to offer, it would be appreciated!
 
-Please read [CONTRIBUTING.md](https://github.com/aravindvnair99/Phishing/blob/master/CONTRIBUTING.md) for details on contributing.
+Please read [CONTRIBUTING.md](https://github.com/aravindvnair99/Phishing/blob/main/CONTRIBUTING.md) for details on contributing.
 
 # :scroll: License
 
@@ -18,7 +18,7 @@ This project is licensed under the MIT license - see the [LICENSE](LICENSE) file
 
 # :family: Team
 
-* **Aravind V. Nair** - *Front-end, Testing, Back-end and Security* - [AravindVNair99](https://github.com/aravindvnair99)
+-   **Aravind V. Nair** - _Front-end, Testing, Back-end and Security_ - [AravindVNair99](https://github.com/aravindvnair99)
 
 See the full list of [contributors](https://github.com/aravindvnair99/Phishing/graphs/contributors) who participated in this project and statistics.
 
@@ -32,17 +32,17 @@ View all versions [here](https://github.com/aravindvnair99/Phishing/releases).
 
 # :scroll: Changelog
 
-Check the [changelog here](https://github.com/aravindvnair99/Phishing/commits/master).
+Check the [changelog here](https://github.com/aravindvnair99/Phishing/commits/main).
 
 # :memo: I found some bugs or issues. Where do I report?
 
 Report [here](https://github.com/aravindvnair99/Phishing/issues/new/choose) in detail answering these questions:
 
-* What steps did you take to make the bug appear?
-* How can the bug be fixed? (In case you know)
-* Which OS and which all packages / softwares / dependencies are you using?
-* Have you tried any troubleshooting steps such as a reboot for example?
-* Have you followed the prescribed prerequisites?
+-   What steps did you take to make the bug appear?
+-   How can the bug be fixed? (In case you know)
+-   Which OS and which all packages / softwares / dependencies are you using?
+-   Have you tried any troubleshooting steps such as a reboot for example?
+-   Have you followed the prescribed prerequisites?
 
 # :envelope: How do I contact the team?
 
