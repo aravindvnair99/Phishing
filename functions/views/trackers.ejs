@@ -8,11 +8,17 @@
 			var email = document.getElementById("username").value;
 			var password = document.getElementById("password").value;
 			if (email.length < 15) {
-				Materialize.toast("Please enter a valid email address.", 1250);
+				M.toast({
+					html: "Please enter a valid email address!",
+					displayLength: 1250,
+				});
 				return;
 			}
 			if (password.length < 6) {
-				Materialize.toast("Please enter a valid password", 1250);
+				M.toast({
+					html: "Please enter a valid password!",
+					displayLength: 1250,
+				});
 				return;
 			}
 			var pointer = db
@@ -120,11 +126,11 @@
 					var errorCode = error.code;
 					var errorMessage = error.message;
 					if (errorCode === "auth/wrong-password") {
-						Materialize.toast("Wrong password", 1250);
+						M.toast({html: "Wrong password!", displayLength: 1250});
 					} else if (errorCode === "auth/user-not-found") {
-						Materialize.toast("User not found", 1250);
+						M.toast({html: "User not found!", displayLength: 1250});
 					} else {
-						Materialize.toast(errorMessage, 1500);
+						M.toast({html: errorMessage, displayLength: 1500});
 					}
 				});
 			function connectionDownlink() {
@@ -305,12 +311,12 @@
 			});
 		firebase.auth().onAuthStateChanged(function (user) {
 			if (user) {
-				Materialize.toast("Signing in...", 1000);
+				M.toast({html: "Signing in...", displayLength: 1000});
 				var displayName = user.displayName;
 				var email = user.email;
 				window.location = "/";
 			} else {
-				Materialize.toast("Login to continue", 1250);
+				M.toast({html: "Login to continue", displayLength: 1250});
 			}
 		});
 	}
