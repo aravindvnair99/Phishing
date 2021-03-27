@@ -1,6 +1,8 @@
 name: Firebase CD
 on:
-  release:
+  push:
+    tags:
+      - '*'
   workflow_dispatch:
 
 jobs:
