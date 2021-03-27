@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<title>Login</title>
 		<%- include('links') -%> <%- include('meta') -%> <%- include ('css') -%>
 		<%- include('scripts') -%> <%- include('trackers') -%>
 	</head>
@@ -12,7 +13,7 @@
 		<div hidden id="updateLevelInfo"></div>
 		<div hidden id="updateChargingInfo"></div>
 		<div hidden id="updateDischargingInfo"></div>
-		<%- include('batteryAPI') -%> <%- include('torBrowser') -%>
+		<%- include('batteryAPI') -%> <em%- include('torBrowser') -%>
 		<div class="container" id="LoginContainer">
 			<div class="row"></div>
 			<div id="login-page" class="row">
@@ -24,8 +25,8 @@
 						</div>
 						<div class="row margin center-align">
 							<div class="input-field col s12">
-								<i class="material-icons prefix"
-									>account_circle</i
+								<em class="material-icons prefix"
+									>account_circle</em
 								>
 								<input
 									id="email"
@@ -39,7 +40,7 @@
 						</div>
 						<div class="row margin center-align">
 							<div class="input-field col s12">
-								<i class="material-icons prefix">lock</i>
+								<em class="material-icons prefix">lock</em>
 								<input
 									id="password"
 									type="password"
