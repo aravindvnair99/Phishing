@@ -1,0 +1,28 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/functions"
+  schedule:
+    interval: daily
+    time: "00:00"
+    timezone: Asia/Calcutta
+  open-pull-requests-limit: 99
+  reviewers:
+  - AravindVNair99
+  assignees:
+  - AravindVNair99
+  ignore:
+  - dependency-name: eslint
+    versions:
+    - 7.22.0
+    - 7.24.0
+  - dependency-name: firebase-admin
+    versions:
+    - 8.13.0
+    - 9.6.0
+  - dependency-name: ejs
+    versions:
+    - 3.1.6
+  - dependency-name: firebase-functions
+    versions:
+    - 3.13.2
