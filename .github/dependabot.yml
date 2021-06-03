@@ -1,0 +1,13 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/functions"
+  schedule:
+    interval: daily
+    time: "00:00"
+    timezone: Asia/Calcutta
+  open-pull-requests-limit: 99
+  reviewers:
+  - AravindVNair99
+  assignees:
+  - AravindVNair99
