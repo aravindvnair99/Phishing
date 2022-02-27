@@ -43,7 +43,7 @@
 		"firebase-functions": "^3.16.0"
 	},
 	"devDependencies": {
-		"eslint": "^8.8.0",
+		"eslint": "^8.10.0",
 		"eslint-config-google": "^0.14.0"
 	},
 	"private": true,
